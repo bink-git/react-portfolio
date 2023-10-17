@@ -1,35 +1,69 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { links } from '@/lib/data';
-import Link from 'next/link';
+import React, { useContext, useState } from "react";
+import { motion } from "framer-motion";
+import { links } from "@/lib/data";
+import Link from "next/link";
+import clsx from "clsx";
+import {
+  ActiveSectionContext,
+  useActiveSectionContext,
+} from "@/context/active-section-context";
 
 const Header = () => {
+  const { activeSection, setActiveSection, setTimeOfLastClick } =
+    useActiveSectionContext();
+
   return (
-    <header className="z-[999] relative">
+    <header className="relative z-[999]">
       <motion.div
-        className="fixed top-0 left-1/2 -translate-x-1/2 h-[4.5rem] w-full rounded-none border border-white border-opacity-40 bg-white bg-opacity-80 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem] sm:top-6 sm:h-[3.25rem] sm:w-[40rem] sm:rounded-full dark:bg-gray-950 dark:border-black/40 dark:bg-opacity-75"
-        initial={{ y: -100, opacity: 0, x: '-50%' }}
-        animate={{ y: 0, opacity: 1, x: '-50%' }}
+        className="fixed left-1/2 top-0 h-[4.5rem] w-full -translate-x-1/2 rounded-none border border-white border-opacity-40 bg-white bg-opacity-80 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem] dark:border-black/40 dark:bg-gray-950 dark:bg-opacity-75 sm:top-6 sm:h-[3.25rem] sm:w-[36rem] sm:rounded-full"
+        initial={{ y: -100, opacity: 0, x: "-50%" }}
+        animate={{ y: 0, opacity: 1, x: "-50%" }}
         transition={{ duration: 0.5 }}
       ></motion.div>
 
-      <nav className="flex fixed top-[0.15rem] h-12 left-1/2 -translate-x-1/2 py-2 sm:top-[1.7rem] sm:h-[initial] sm:py-0 ">
-        <ul className="flex justify-center w-[22rem] gap-y-1 text-[0.9rem] font-medium text-gray-500 sm:w-[initial] sm:flex-nowrap sm:gap-5 items-center flex-wrap">
+      <nav className="fixed left-1/2 top-[0.15rem] flex h-12 -translate-x-1/2 py-2 sm:top-[1.7rem] sm:h-[initial] sm:py-0">
+        <ul className="flex flex-wrap items-center justify-center gap-y-1 text-[0.9rem] font-medium text-gray-500  sm:flex-nowrap sm:gap-5">
           {links.map((link) => (
             <motion.li
-              className="h-3/4 flex items-center justify-center"
+              className={clsx("flex h-3/4 items-center justify-center ", {
+                "rounded-full bg-gray-800 leading-none text-white transition hover:text-gray-200":
+                  activeSection === link.name,
+              })}
               key={link.hash}
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              layoutId="activeSection"
+              transition={{
+                duration: 0.5,
+                type: "spring",
+                stiffness: 400,
+                damping: 40,
+              }}
             >
               <Link
-                className="flex w-full items-center justify-center p-3 hover:text-gray-900 transition "
+                className={clsx(
+                  "relative flex w-full items-center justify-center p-3 transition hover:text-gray-900",
+                  {
+                    "hover:text-white": activeSection === link.name,
+                  },
+                )}
                 href={link.hash}
+                onClick={() => {
+                  setActiveSection(link.name);
+                  setTimeOfLastClick(Date.now());
+                }}
               >
                 {link.name}
+
+                {/* {link.name === activeSection && (
+                  <motion.span
+                    className="absolute inset-0 -z-10 rounded-full bg-gray-100"
+                    layoutId="activeSection"
+                    transition={{ type: "spring", stiffness: 400, damping: 40 }}
+                  ></motion.span>
+                )} */}
               </Link>
             </motion.li>
           ))}
