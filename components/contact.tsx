@@ -4,9 +4,9 @@ import React from "react";
 import SectionHeading from "./section-heading";
 import { motion } from "framer-motion";
 import { useSectionInView } from "@/lib/hooks";
-// import { sendEmail } from "@/actions/sendEmail";
-// import SubmitBtn from "./submit-btn";
-// import toast from "react-hot-toast";
+import { sendEmail } from "@/actions/sendEmail";
+import SubmitBtn from "./submit-btn";
+import toast from "react-hot-toast";
 
 export default function Contact() {
   const { ref } = useSectionInView("Contact");
@@ -41,16 +41,16 @@ export default function Contact() {
 
       <form
         className="mt-10 flex flex-col dark:text-black"
-        // action={async (formData) => {
-        //   const { data, error } = await sendEmail(formData);
+        action={async (formData) => {
+          const { data, error } = await sendEmail(formData);
 
-        //   if (error) {
-        //     toast.error(error);
-        //     return;
-        //   }
+          if (error) {
+            toast.error(error);
+            return;
+          }
 
-        //   toast.success("Email sent successfully!");
-        // }}
+          toast.success("Email sent successfully!");
+        }}
       >
         <input
           className="borderBlack h-14 rounded-lg px-4 transition-all dark:bg-white dark:bg-opacity-80 dark:outline-none dark:focus:bg-opacity-100"
@@ -67,7 +67,7 @@ export default function Contact() {
           required
           maxLength={5000}
         />
-        {/* <SubmitBtn /> */}
+        <SubmitBtn />
       </form>
     </motion.section>
   );

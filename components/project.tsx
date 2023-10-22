@@ -25,9 +25,9 @@ const Project = ({ title, description, tags, imageUrl }: ProjectProps) => {
       }}
       className="group mb-3 last:mb-0 sm:mb-8"
     >
-      <section className="group flex max-w-[48rem] cursor-pointer flex-col-reverse justify-between overflow-hidden rounded-2xl border border-black/5  bg-gray-100 hover:bg-gray-50 hover:shadow-xl sm:h-[20rem] sm:flex-row sm:group-even:flex-row-reverse">
+      <section className="group flex max-w-[48rem] cursor-pointer flex-col-reverse justify-between overflow-hidden rounded-2xl border border-black/5 bg-gray-100 hover:bg-gray-50 hover:shadow-xl sm:h-[20rem] sm:flex-row sm:group-even:flex-row-reverse">
         <div className="flex h-full flex-col px-5 pb-7 pt-4 sm:max-w-[50%] sm:px-10 sm:pt-10">
-          <h3 className="text-2xl font-semibold">{title}</h3>
+          <h3 className="text-2xl font-semibold dark:text-gray-800">{title}</h3>
           <p className="mt-2 leading-relaxed text-gray-700">{description}</p>
           <ul className="mt-4 flex flex-wrap items-end gap-2 sm:mt-auto">
             {tags.map((tag) => (

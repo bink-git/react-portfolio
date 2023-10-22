@@ -9,21 +9,22 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 import { experiencesData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
-// import { useTheme } from "@/context/theme-context";
+import { useTheme } from "@/context/theme-context";
 
 export default function Experience() {
   const { ref } = useSectionInView("Experience");
-  // const { theme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <section id="experience" ref={ref} className="mb-28 scroll-mt-28 sm:mb-40">
       <SectionHeading>My experience</SectionHeading>
-      <VerticalTimeline lineColor="" animate={true}>
+      <VerticalTimeline lineColor={""}>
         {experiencesData.map((item, index) => (
           <React.Fragment key={index}>
             <VerticalTimelineElement
               contentStyle={{
-                background: "#f3f4f6",
+                background:
+                  theme === "light" ? "#f3f4f6" : "rgba(255, 255, 255, 0.05)",
                 boxShadow: "none",
                 border: "1px solid rgba(0, 0, 0, 0.05)",
                 textAlign: "left",
@@ -35,7 +36,7 @@ export default function Experience() {
               date={item.date}
               icon={item.icon}
               iconStyle={{
-                background: "#dde1e9",
+                background: "#c7c8ca",
                 fontSize: "1.5rem",
               }}
               visible={true}
